@@ -41,3 +41,9 @@ C:\Users\kacpe\source\repos\Recipes4Students\webapi\bin\Debug\net7.0\Mono.TextTe
 C:\Users\kacpe\source\repos\Recipes4Students\webapi\bin\Debug\net7.0\Npgsql.dll
 C:\Users\kacpe\source\repos\Recipes4Students\webapi\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\kacpe\source\repos\Recipes4Students\webapi\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\kacpe\source\repos\Recipes4Students\webapi\bin\Debug\net7.0\BCrypt.Net-Next.dll
+C:\Users\kacpe\source\repos\Recipes4Students\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\kacpe\source\repos\Recipes4Students\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\kacpe\source\repos\Recipes4Students\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\kacpe\source\repos\Recipes4Students\webapi\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\kacpe\source\repos\Recipes4Students\webapi\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll

@@ -15,15 +15,11 @@
             <v-text-field v-model="name.value.value" :counter="22" :error-messages="name.errorMessage.value"
                 label="Name"></v-text-field>
 
-            <v-select v-model="select.value.value" :items="items" :error-messages="select.errorMessage.value"
+            <v-select v-model="field.value.value" :items="items" :error-messages="field.errorMessage.value"
                 label="Field"></v-select>
 
             <v-btn class="me-4" type="submit">
                 submit
-            </v-btn>
-
-            <v-btn @click="handleReset">
-                clear
             </v-btn>
         </form>
     </v-container>
@@ -38,41 +34,35 @@ export default {
             validationSchema: {
                 name(value) {
                     if (value?.length >= 2) return true
-
-                    return 'Name needs to be at least 2 characters.'
+                    else return 'Name needs to be at least 2 characters.'
                 },
                 index(value) {
                     if (value?.length == 6) return true
-                    return "Index needs to have exactly 6 characters"
+                    else return "Index needs to have exactly 6 characters"
                 },
                 password(value) {
                     if (value?.length > 6 && /[0-9-a-z-A-Z]+/.test(value)) return true
-
-                    return 'Password needs have at least 6 digits.'
+                    else return 'Password needs have at least 6 digits.'
                 },
                 email(value) {
                     if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
-
-                    return 'Must be a valid e-mail.'
+                    else return 'Must be a valid e-mail.'
                 },
                 select(value) {
                     if (value) return true
-
-                    return 'Select an item.'
+                    else return 'Select an item.'
                 },
                 checkbox(value) {
                     if (value === '1') return true
-
-                    return 'Must be checked.'
+                    else return 'Must be checked.'
                 },
-            },
+            }
         })
         const email = useField('email')
         const index = useField('index')
         const password = useField('password')
         const name = useField('name')
-        const select = useField('select')
-        const checkbox = useField('checkbox')
+        const field = useField('field')
 
         const items = ref([
             'Automatyka i Robotyka',
@@ -82,10 +72,11 @@ export default {
         ])
 
         const submit = handleSubmit(values => {
+            console.log(values)
             alert(JSON.stringify(values, null, 2))
         })
 
-        return { name, index, password, email, select, checkbox, items, submit, handleReset }
+        return { name, index, password, email, field, items, submit, handleReset }
     },
 }
 </script>

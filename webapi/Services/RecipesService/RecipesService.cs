@@ -6,27 +6,6 @@ namespace webapi.Services.RecipesService
 {
     public class RecipesService : IRecipesService
     {
-        private static List<Recipe> recipesList = new List<Recipe>
-        {
-            new Recipe
-            {
-                Id = 1,
-                Title = "Pieczony Ryz",
-                Description = "Fajny przepis",
-                ImageURL = "XD",
-                RecipeURL = "XD",
-                UserID = 1
-            },
-            new Recipe
-            {
-                Id = 2,
-                Title = "Pieczony Makaron",
-                Description = "Fajny przepis v2",
-                ImageURL = "XD",
-                RecipeURL = "XD",
-                UserID = 2
-            },
-        };
         private readonly DataContext _context;
 
         public RecipesService(DataContext context)

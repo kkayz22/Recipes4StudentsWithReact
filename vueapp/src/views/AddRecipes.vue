@@ -3,14 +3,14 @@
       <h1>New Recipe</h1>
       <v-divider style="margin: 1em 0 2em 0;"></v-divider>
       <form @submit.prevent="submit">
-         <v-text-field v-model="title.value.value" :error-messages="title.errorMessage.value" label="Title"></v-text-field>
+         <v-text-field v-model="title.value.value" :counter="20" :error-messages="title.errorMessage.value" label="Title"></v-text-field>
 
-         <v-text-field v-model="description.value.value" :counter="6" :error-messages="description.errorMessage.value" label="Description"></v-text-field>
+         <v-text-field v-model="description.value.value" :counter="40" :error-messages="description.errorMessage.value" label="Description"></v-text-field>
 
-         <v-text-field v-model="imageUrl.value.value" :counter="21" :error-messages="imageUrl.errorMessage.value"
+         <v-text-field v-model="imageURL.value.value" :error-messages="imageURL.errorMessage.value"
             label="ImageURL" hint="Make sure to provide a valid link url"></v-text-field>
 
-         <v-text-field v-model="recipeUrl.value.value" :counter="22" :error-messages="recipeUrl.errorMessage.value"
+         <v-text-field v-model="recipeURL.value.value" :error-messages="recipeURL.errorMessage.value"
             label="RecipeURL"></v-text-field>
 
          <v-btn class="me-4" type="submit">
@@ -44,8 +44,8 @@ export default {
 
                     return 'Needs to be a valid URL'
                 },
-                email(value) {
-                    if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
+                recipeUrl(value) {
+                    if (value?.length > 2) return true
 
                     return 'No idea honestly'
                 }
@@ -53,20 +53,22 @@ export default {
         })
         const title = useField('title')
         const description = useField('description')
-        const imageUrl = useField('imageUrl')
-        const recipeUrl = useField('recipeUrl')
+        const imageURL = useField('imageURL')
+        const recipeURL = useField('recipeURL')
 
         const submit = handleSubmit(values => {
-            fetch("https://localhost:7220/api/Recipes", {
+            /*fetch("http://localhost:5200/api/Recipes", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: values
-            })
+            })*/
+            console.log(values)
+            alert(JSON.stringify(values, null, 2))
         })
 
-        return { title, description, imageUrl, recipeUrl, submit, handleReset }
+        return { title, description, imageURL, recipeURL, submit, handleReset }
     },
 }
 </script>

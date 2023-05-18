@@ -26,6 +26,7 @@ export default {
         const password = useField('password')
 
         const submit = handleSubmit(values => {
+            console.log(values);
             alert(JSON.stringify(values, null, 2))
         })
 
