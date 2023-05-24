@@ -73,7 +73,6 @@ export default {
 
         const submit = handleSubmit(values => {
             console.log(values)
-            alert(JSON.stringify(values, null, 2))
         })
 
         return { name, index, password, email, field, items, submit, handleReset }

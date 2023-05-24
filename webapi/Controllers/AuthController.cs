@@ -6,51 +6,65 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Reflection.Metadata.Ecma335;
+using webapi.Data;
 
 namespace webapi.Controllers
 {
     public class AuthController : ControllerBase
     {
-        public static User user = new User();
+        private readonly DataContext _context;
         private readonly IConfiguration _configuration;
 
-        public AuthController(IConfiguration configuration) 
+        public AuthController(IConfiguration configuration, DataContext context) 
         {
             _configuration = configuration;
+            _context = context;
         } 
 
         [HttpPost("register")]
-        public ActionResult<User> Register(UserDTO request)
+        public async Task<ActionResult<User>> Register([FromBody]UserDTO request)
         {
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+            var user = await _context.Users.FindAsync(request.Email);
+            if (user == null)
+            {
+                string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-            user.Id = Guid.NewGuid();
-            user.Email = request.Email;
-            user.PasswordHash = passwordHash;
-            user.Username = request.Username;
-            user.Index = request.Index;
-            user.Field = request.Field;
+                User newUser = new();
+                newUser.Id = Guid.NewGuid();
+                newUser.Email = request.Email;
+                newUser.PasswordHash = passwordHash;
+                newUser.Username = request.Username;
+                newUser.Index = request.Index;
+                newUser.Field = request.Field;
 
-            return Ok(user);
+                _context.Users.Add(newUser);
+                await _context.SaveChangesAsync();
+
+                return Ok(newUser);
+            } 
+            else
+            {
+                return BadRequest("User already exist.");
+            }
         }
 
-        [HttpPost("login")]
-        public ActionResult<User> Login(UserDTO request)
-        {
-            if (user.Email != request.Email)
-            {
-                return BadRequest("User not found.");
-            }
+        //[HttpPost("login")]
+        //public ActionResult<User> Login([FromBody]UserDTO request)
+        //{
+        //    if (user.Email != request.Email)
+        //    {
+        //        return BadRequest("User not found.");
+        //    }
 
-            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash)) 
-            {
-                return BadRequest("Wrong password.");
-            }
+        //    if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash)) 
+        //    {
+        //        return BadRequest("Wrong password.");
+        //    }
 
-            string token = CreateToken(user);
+        //    string token = CreateToken(user);
 
-            return Ok(token);
-        }
+        //    return Ok(token);
+        //}
 
         private string CreateToken(User user)
         {
