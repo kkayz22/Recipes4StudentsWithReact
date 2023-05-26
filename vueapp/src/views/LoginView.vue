@@ -1,4 +1,4 @@
-<template> 
+<template>
     <v-container style="max-width: 40rem;">
         <h1>Login</h1>
         <v-divider style="margin: 1em 0 2em 0;"></v-divider>
@@ -15,19 +15,31 @@
 </template>
 
 <script>
-
 import { useField, useForm } from 'vee-validate'
+//import axios from 'axios'
+
+import { useAuthStore } from '@/stores'
+//import router from '@/router'
 
 export default {
     setup() {
-        const { handleSubmit } = useForm({
-        })
+        const authStore = useAuthStore();
+        const { handleSubmit } = useForm()
         const email = useField('email')
         const password = useField('password')
 
         const submit = handleSubmit(values => {
             console.log(values);
-            alert(JSON.stringify(values, null, 2))
+            authStore.login(values);
+            /*axios.post("http://localhost:5200/Auth/Login", values, {
+                withCredentials: true
+            }).then(function (response) {
+                console.log(response.data)
+                localStorage.setItem("token", response.data.token)
+            }).catch(function (error) {
+                console.log(error)
+            })
+            router.push("/")*/
         })
 
         return { email, password, submit }

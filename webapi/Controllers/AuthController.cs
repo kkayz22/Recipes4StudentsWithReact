@@ -4,12 +4,15 @@ using webapi.DTO;
 using webapi.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 using System.Text;
-using System.Reflection.Metadata.Ecma335;
 using webapi.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace webapi.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class AuthController : ControllerBase
     {
         private readonly DataContext _context;
@@ -22,14 +25,18 @@ namespace webapi.Controllers
         } 
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register([FromBody]UserDTO request)
+        public async Task<ActionResult<User>> Register([FromBody]UserRegisterDTO request)
         {
-            var user = await _context.Users.FindAsync(request.Email);
-            if (user == null)
+            var user = _context.Users.Any(u => u.Email == request.Email);
+            if (user)
+            {
+                return BadRequest("User already exist.");
+            } 
+            else
             {
                 string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-                User newUser = new();
+                User newUser = new User();
                 newUser.Id = Guid.NewGuid();
                 newUser.Email = request.Email;
                 newUser.PasswordHash = passwordHash;
@@ -41,47 +48,54 @@ namespace webapi.Controllers
                 await _context.SaveChangesAsync();
 
                 return Ok(newUser);
-            } 
-            else
-            {
-                return BadRequest("User already exist.");
             }
         }
 
-        //[HttpPost("login")]
-        //public ActionResult<User> Login([FromBody]UserDTO request)
-        //{
-        //    if (user.Email != request.Email)
-        //    {
-        //        return BadRequest("User not found.");
-        //    }
+        [HttpPost("login")]
+        public async Task<ActionResult<User>> Login([FromBody] UserLoginDTO request)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
 
-        //    if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash)) 
-        //    {
-        //        return BadRequest("Wrong password.");
-        //    }
+            if (user == null)
+            {
+                return BadRequest("User does not exist.");
+            } 
+            else
+            {
+                if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+                {
+                    return BadRequest("Wrong password.");
+                }
 
-        //    string token = CreateToken(user);
+                string token = CreateToken(user);
 
-        //    return Ok(token);
-        //}
+                var response = new 
+                {
+                    User = user,
+                    Token = token
+                };
+
+                return Ok(response);
+            }
+        }
 
         private string CreateToken(User user)
         {
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, user.Email)
+            List<Claim> claims = new List<Claim> {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Upn, user.Username),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes
-                (_configuration.GetSection("AppSettings:Token").Value!));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                _configuration.GetSection("AppSettings:Token").Value!));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddDays(3),
-                signingCredentials: credentials
-            );
+                    claims: claims,
+                    expires: DateTime.Now.AddDays(1),
+                    signingCredentials: creds
+                );
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
@@ -89,3 +103,4 @@ namespace webapi.Controllers
         }
     }
 }
+

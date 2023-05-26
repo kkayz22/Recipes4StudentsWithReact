@@ -1,6 +1,6 @@
 ﻿namespace webapi.DTO
 {
-    public class UserDTO
+    public class UserRegisterDTO
     {
         public Guid Id { get; set; }
         public required string Email { get; set; }

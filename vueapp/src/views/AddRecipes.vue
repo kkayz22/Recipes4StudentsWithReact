@@ -37,6 +37,7 @@
 <script>
 import { useField, useForm } from 'vee-validate'
 import axios from "axios"
+import router from "../router/index"
 
 export default {
     setup() {
@@ -85,6 +86,7 @@ export default {
                 console.log(error)
             })
             handleReset()
+            router.push("/")
         })
 
         return { Title, Description, ImageURL, RecipeURL, submit, handleReset }

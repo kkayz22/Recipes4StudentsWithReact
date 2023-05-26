@@ -6,13 +6,13 @@
             <v-text-field v-model="email.value.value" :error-messages="email.errorMessage.value" label="E-mail"
                 type="email"></v-text-field>
 
-            <v-text-field v-model="index.value.value" :counter="6" :error-messages="index.errorMessage.value"
-                label="Index" type="number"></v-text-field>
+            <v-text-field v-model="index.value.value" :counter="6" :error-messages="index.errorMessage.value" label="Index"
+                type="number"></v-text-field>
 
             <v-text-field v-model="password.value.value" :counter="21" :error-messages="password.errorMessage.value"
                 label="Password" type="password" hint="Make sure to provide a strong password :)!"></v-text-field>
 
-            <v-text-field v-model="name.value.value" :counter="22" :error-messages="name.errorMessage.value"
+            <v-text-field v-model="username.value.value" :counter="22" :error-messages="username.errorMessage.value"
                 label="Name"></v-text-field>
 
             <v-select v-model="field.value.value" :items="items" :error-messages="field.errorMessage.value"
@@ -27,12 +27,13 @@
 <script>
 import { ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
+import axios from "axios"
 
 export default {
     setup() {
         const { handleSubmit, handleReset } = useForm({
             validationSchema: {
-                name(value) {
+                username(value) {
                     if (value?.length >= 2) return true
                     else return 'Name needs to be at least 2 characters.'
                 },
@@ -48,20 +49,16 @@ export default {
                     if (/^[a-z.-]+@[a-z.-]+\.[a-z]+$/i.test(value)) return true
                     else return 'Must be a valid e-mail.'
                 },
-                select(value) {
+                field(value) {
                     if (value) return true
                     else return 'Select an item.'
-                },
-                checkbox(value) {
-                    if (value === '1') return true
-                    else return 'Must be checked.'
-                },
+                }
             }
         })
         const email = useField('email')
         const index = useField('index')
         const password = useField('password')
-        const name = useField('name')
+        const username = useField('username')
         const field = useField('field')
 
         const items = ref([
@@ -73,9 +70,16 @@ export default {
 
         const submit = handleSubmit(values => {
             console.log(values)
+            axios.post("http://localhost:5200/Auth/register", values)
+                .then(function (response) {
+                    console.log(response)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
         })
 
-        return { name, index, password, email, field, items, submit, handleReset }
+        return { username, index, password, email, field, items, submit, handleReset }
     },
 }
 </script>

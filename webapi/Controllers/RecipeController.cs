@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using webapi.Models;
 using webapi.Services.RecipesService;
@@ -33,7 +34,7 @@ namespace webapi.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task<ActionResult<List<Recipe>>> AddRecipe([FromBody]Recipe recipe)
         {
             var result = await _recipesService.AddRecipe(recipe);
