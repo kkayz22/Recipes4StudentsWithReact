@@ -11,11 +11,13 @@ export const useAuthStore = defineStore({
     }),
     actions: {
         async login (values) {
-            const user = await axios.post("http://localhost:5200/Auth/login", values);
+            const response = await axios.post("http://localhost:5200/Auth/login", values, {
+                withCredentials: true
+            });
 
-            this.user = user;
+            this.user = response.data;
 
-            localStorage.setItem("user", JSON.stringify(user))
+            localStorage.setItem("user", JSON.stringify(response.data))
             router.push(this.returnUrl || "/");
         },
         logout() {

@@ -15,6 +15,7 @@ namespace webapi.Services.RecipesService
 
         public async Task<List<Recipe>> AddRecipe(Recipe recipe)
         {
+            recipe.Id = Guid.NewGuid();
             _context.Recipes.Add(recipe);
             await _context.SaveChangesAsync();
             return await _context.Recipes.ToListAsync();

@@ -29,6 +29,8 @@ import { ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import axios from "axios"
 
+import router from '@/router'
+
 export default {
     setup() {
         const { handleSubmit, handleReset } = useForm({
@@ -77,6 +79,7 @@ export default {
                 .catch(function (error) {
                     console.log(error)
                 })
+            router.push("/login")
         })
 
         return { username, index, password, email, field, items, submit, handleReset }

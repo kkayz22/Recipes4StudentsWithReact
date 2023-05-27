@@ -37,17 +37,24 @@
 <script>
 import { useField, useForm } from 'vee-validate'
 import axios from "axios"
+
+import { useAuthStore } from '@/stores'
 import router from "../router/index"
+import { storeToRefs } from 'pinia'
 
 export default {
     setup() {
+        const authStore = useAuthStore()
+        const { user: authUser } = storeToRefs(authStore)
+
         const { handleSubmit, handleReset } = useForm({
             initialValues: {
                 Title: "",
                 Description: "",
                 ImageURL: "",
                 RecipeURL: "",
-                UserID: 1
+                Username: authUser.value.user.username,
+                Index: authUser.value.user.index
             },
             validationSchema: {
                 Title(value) {
@@ -78,7 +85,8 @@ export default {
 
         const submit = handleSubmit(values => {
             console.log(values)
-            axios.post("http://localhost:5200/api/Recipes", values)
+            const headers = { 'Authorization': `Bearer ${authUser.value.token}` }
+            axios.post("http://localhost:5200/api/Recipes", values, {headers})
             .then(function(response) {
                 console.log(response)
             })

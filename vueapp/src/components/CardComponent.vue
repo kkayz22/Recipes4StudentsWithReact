@@ -5,16 +5,17 @@
 			{{ recipe.title }}
 		</v-card-title>
 		<v-card-subtitle>
-			Added by {{ recipe.userID }}
+			Added by {{ recipe.username }}, s{{ recipe.index }}
 		</v-card-subtitle>
 		<v-card-actions>
-			<v-btn color="orange-lighten-2" variant="text" v-if="recipe.recipeURL">
-				<router-link :to="recipe.recipeURL" target="_blank">
-					Visit the recipe page
-				</router-link>
+			<v-btn color="orange-lighten-1" variant="text" v-if="recipe.recipeURL" :href="recipe.recipeURL">
+				Explore
 			</v-btn>
 			<v-spacer></v-spacer>
-			<v-btn :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show = !show"></v-btn>
+			<v-btn @click="show = !show">
+				<v-icon icon="mdi-chevron-up" v-if="show"></v-icon>
+				<v-icon icon="mdi-chevron-down" v-else></v-icon>
+			</v-btn>
 		</v-card-actions>
 		<v-expand-transition>
 			<div v-show="show">

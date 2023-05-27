@@ -24,11 +24,9 @@ namespace webapi.Migrations
 
             modelBuilder.Entity("webapi.Models.Recipe", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -38,6 +36,9 @@ namespace webapi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Index")
+                        .HasColumnType("integer");
+
                     b.Property<string>("RecipeURL")
                         .IsRequired()
                         .HasColumnType("text");
@@ -46,8 +47,9 @@ namespace webapi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("integer");
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

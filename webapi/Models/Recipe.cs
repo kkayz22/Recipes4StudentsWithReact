@@ -1,13 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace webapi.Models
 {
     public class Recipe
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string Title { get; set; } = string.Empty;
         [Required]
@@ -16,7 +14,7 @@ namespace webapi.Models
         public string ImageURL { get; set; } = string.Empty;
         [Required]
         public string RecipeURL { get; set; } = string.Empty;
-        [Required]
-        public int UserID { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public int Index { get; set; }
     }
 }

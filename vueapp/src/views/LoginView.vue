@@ -23,14 +23,14 @@ import { useAuthStore } from '@/stores'
 
 export default {
     setup() {
-        const authStore = useAuthStore();
+        const authStore = useAuthStore()
         const { handleSubmit } = useForm()
         const email = useField('email')
         const password = useField('password')
 
-        const submit = handleSubmit(values => {
-            console.log(values);
-            authStore.login(values);
+        const submit = handleSubmit(values => { 
+            console.log(values)
+            authStore.login(values)
             /*axios.post("http://localhost:5200/Auth/Login", values, {
                 withCredentials: true
             }).then(function (response) {
