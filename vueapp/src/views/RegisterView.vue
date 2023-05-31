@@ -22,6 +22,11 @@
                 submit
             </v-btn>
         </form>
+        <div v-if="validationErrors.length > 0" class="error-list">
+            <ul>
+                <li v-for="error in validationErrors" :key="error">{{ error }}</li>
+            </ul>
+        </div>
     </v-container>
 </template>
 <script>
@@ -32,6 +37,11 @@ import axios from "axios"
 import router from '@/router'
 
 export default {
+    data() {
+        return {
+            validationErrors: [],
+        }
+    },
     setup() {
         const { handleSubmit, handleReset } = useForm({
             validationSchema: {
@@ -77,7 +87,9 @@ export default {
                     console.log(response)
                 })
                 .catch(function (error) {
-                    console.log(error)
+                    if (error.response && error.response.status === 400) {
+                        this.validationErrors = error.response.data.errors;
+                    }
                 })
             router.push("/login")
         })

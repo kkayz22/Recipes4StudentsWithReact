@@ -10,39 +10,42 @@
             <v-btn class="me-4 " type="submit">
                 submit
             </v-btn>
+            <v-alert title="Authentication error" icon="mdi-firework" style="margin-top: 1rem;" variant="outlined" type="error"
+                v-if="apiErr" prominent border="top">
+                {{ apiErr }}
+            </v-alert>
         </form>
     </v-container>
 </template>
 
 <script>
 import { useField, useForm } from 'vee-validate'
-//import axios from 'axios'
+import { ref } from "vue"
 
 import { useAuthStore } from '@/stores'
-//import router from '@/router'
 
 export default {
     setup() {
         const authStore = useAuthStore()
         const { handleSubmit } = useForm()
+
         const email = useField('email')
         const password = useField('password')
 
-        const submit = handleSubmit(values => { 
-            console.log(values)
-            authStore.login(values)
-            /*axios.post("http://localhost:5200/Auth/Login", values, {
-                withCredentials: true
-            }).then(function (response) {
-                console.log(response.data)
-                localStorage.setItem("token", response.data.token)
-            }).catch(function (error) {
-                console.log(error)
-            })
-            router.push("/")*/
+        const apiErr = ref("")
+
+        const submit = handleSubmit(async (values) => {
+            try {
+                console.log(values)
+                await authStore.login(values)
+            }
+            catch (error) {
+                apiErr.value = error.response.data
+                console.log(apiErr)
+            }
         })
 
-        return { email, password, submit }
+        return { email, password, submit, apiErr }
     },
 }
 </script>
