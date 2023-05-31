@@ -22,11 +22,10 @@
                 submit
             </v-btn>
         </form>
-        <div v-if="validationErrors.length > 0" class="error-list">
-            <ul>
-                <li v-for="error in validationErrors" :key="error">{{ error }}</li>
-            </ul>
-        </div>
+        <v-alert title="Authentication error" style="margin-top: 1rem;" variant="outlined" type="error"
+            v-if="apiErr" prominent border="top">
+            {{ apiErr }}
+        </v-alert>
     </v-container>
 </template>
 <script>
@@ -37,11 +36,6 @@ import axios from "axios"
 import router from '@/router'
 
 export default {
-    data() {
-        return {
-            validationErrors: [],
-        }
-    },
     setup() {
         const { handleSubmit, handleReset } = useForm({
             validationSchema: {
@@ -80,21 +74,19 @@ export default {
             'Informatyka',
         ])
 
-        const submit = handleSubmit(values => {
-            console.log(values)
-            axios.post("http://localhost:5200/Auth/register", values)
-                .then(function (response) {
-                    console.log(response)
-                })
-                .catch(function (error) {
-                    if (error.response && error.response.status === 400) {
-                        this.validationErrors = error.response.data.errors;
-                    }
-                })
-            router.push("/login")
+        const apiErr = ref("")
+
+        const submit = handleSubmit(async values => {
+            try {
+                console.log(values)
+                await axios.post("http://localhost:5200/Auth/register", values)
+                router.push("/login")
+            } catch (error) {
+                apiErr.value = error.response.data;
+            }
         })
 
-        return { username, index, password, email, field, items, submit, handleReset }
+        return { apiErr, username, index, password, email, field, items, submit, handleReset }
     },
 }
 </script>
