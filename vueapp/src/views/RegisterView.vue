@@ -19,7 +19,7 @@
                 label="Field"></v-select>
 
             <v-btn class="me-4" type="submit">
-                submit
+               sign up 
             </v-btn>
         </form>
         <v-alert title="Authentication error" style="margin-top: 1rem;" variant="outlined" type="error"

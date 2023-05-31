@@ -1,9 +1,5 @@
 <template>
     <v-toolbar app>
-        <span class="hidden-sm-and-up">
-            <v-app-bar-nav-icon @click="sidebar = !sidebar">
-            </v-app-bar-nav-icon>
-        </span>
         <v-toolbar-title>
             <router-link to="/" style="cursor: pointer; color: black; text-decoration: none;">
                 {{ appTitle }}
@@ -33,7 +29,7 @@ export default {
     },
     data() {
         return {
-            appTitle: "Recipes4Students",
+            appTitle: "r4s",
             menuItems: [
                 { title: "Add a recipe", path: "/add" },
                 { title: "Login", path: "/login" },

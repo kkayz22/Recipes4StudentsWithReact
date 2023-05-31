@@ -8,7 +8,7 @@
             <v-text-field v-model="password.value.value" :counter="21" :error-messages="password.errorMessage.value"
                 label="Password" type="password"></v-text-field>
             <v-btn class="me-4 " type="submit">
-                submit
+                sign in
             </v-btn>
             <v-alert title="Authentication error" icon="mdi-firework" style="margin-top: 1rem;" variant="outlined" type="error"
                 v-if="apiErr" prominent border="top">

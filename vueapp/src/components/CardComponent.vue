@@ -9,7 +9,7 @@
 		</v-card-subtitle>
 		<v-card-actions>
 			<v-btn color="orange-lighten-1" variant="text" v-if="recipe.recipeURL" :href="recipe.recipeURL">
-				Explore
+				Check the recipe page	
 			</v-btn>
 			<v-spacer></v-spacer>
 			<v-btn @click="show = !show">

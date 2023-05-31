@@ -1,6 +1,5 @@
 <template>
-    <v-container style="max-width: 80rem; display: flex; flex-direction: column; align-items: center;">
-        <h1>Recipes ^.^</h1>
+    <v-container style="max-width: 80rem; display: flex; flex-direction: column; align-items: center;"> 
         <div v-if="loading" style="margin-top: 10em ;display: flex; align-items: center; justify-content: center; height: 100%;">
             <v-progress-circular :width="5" :size="50" color="gray" indeterminate></v-progress-circular>
         </div>
