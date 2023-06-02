@@ -1,2 +1,0 @@
-C:\Users\kacpe\source\repos\Recipes4Students\vueapp\obj\Debug\vueapp.esproj.SuggestedBindingRedirects.cache
-C:\Users\kacpe\source\repos\Recipes4Students\vueapp\obj\Debug\vueapp.esproj.CoreCompileInputs.cache

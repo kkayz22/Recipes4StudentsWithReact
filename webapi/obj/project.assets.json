@@ -2286,11 +2286,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kacpe\\source\\repos\\Recipes4Students\\webapi\\webapi.csproj",
+      "projectUniqueName": "C:\\Users\\kacpe\\Documents\\GitHub\\results-summary-component-main\\Recipes4StudentsWithReact\\webapi\\webapi.csproj",
       "projectName": "webapi",
-      "projectPath": "C:\\Users\\kacpe\\source\\repos\\Recipes4Students\\webapi\\webapi.csproj",
+      "projectPath": "C:\\Users\\kacpe\\Documents\\GitHub\\results-summary-component-main\\Recipes4StudentsWithReact\\webapi\\webapi.csproj",
       "packagesPath": "C:\\Users\\kacpe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kacpe\\source\\repos\\Recipes4Students\\webapi\\obj\\",
+      "outputPath": "C:\\Users\\kacpe\\Documents\\GitHub\\results-summary-component-main\\Recipes4StudentsWithReact\\webapi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kacpe\\AppData\\Roaming\\NuGet\\NuGet.Config",
