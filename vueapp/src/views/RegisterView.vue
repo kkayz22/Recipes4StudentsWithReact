@@ -19,11 +19,16 @@
                 label="Field"></v-select>
 
             <v-btn class="me-4" type="submit">
-               sign up 
+                <div v-if="loading">
+                    <v-progress-circular :width="5" :size="20" color="gray" indeterminate></v-progress-circular>
+                </div>
+                <div v-else>
+                    sign up
+                </div>
             </v-btn>
         </form>
-        <v-alert title="Authentication error" style="margin-top: 1rem;" variant="outlined" type="error"
-            v-if="apiErr" prominent border="top">
+        <v-alert title="Authentication error" style="margin-top: 1rem;" variant="outlined" type="error" v-if="apiErr"
+            prominent border="top">
             {{ apiErr }}
         </v-alert>
     </v-container>
@@ -75,18 +80,21 @@ export default {
         ])
 
         const apiErr = ref("")
+        const loading = ref(false)
 
         const submit = handleSubmit(async values => {
             try {
+                loading.value = true
                 console.log(values)
                 await axios.post("http://localhost:5200/Auth/register", values)
                 router.push("/login")
+                loading.value = false
             } catch (error) {
                 apiErr.value = error.response.data;
             }
         })
 
-        return { apiErr, username, index, password, email, field, items, submit, handleReset }
+        return { loading, apiErr, username, index, password, email, field, items, submit, handleReset }
     },
 }
 </script>
