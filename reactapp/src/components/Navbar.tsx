@@ -8,14 +8,14 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
 	return (
 		<Box>
-			<AppBar position="absolute" color='default'>
+			<AppBar position="absolute" sx={{bgcolor: "black"}}>
 				<Toolbar>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						<Link to="/" style={{ textDecoration: "none", color: "black" }}>Home</Link>
+						<Link to="/" style={{ textDecoration: "none", color: "white" }}>Home</Link>
 					</Typography>
-					<Button color="inherit"><Link to="/addRecipe" style={{ textDecoration: "none", color: "black" }}>Add a recipe</Link></Button>
-					<Button color="inherit"><Link to="/login" style={{ textDecoration: "none", color: "black" }}>Login</Link></Button>
-					<Button color="inherit"><Link to="/register" style={{ textDecoration: "none", color: "black" }}>Register</Link></Button>
+					<Button color="inherit"><Link to="/addRecipe" style={{ textDecoration: "none", color: "white" }}>Add a recipe</Link></Button>
+					<Button color="inherit"><Link to="/login" style={{ textDecoration: "none", color: "white" }}>Login</Link></Button>
+					<Button color="inherit"><Link to="/register" style={{ textDecoration: "none", color: "white" }}>Register</Link></Button>
 				</Toolbar>
 			</AppBar>
 		</Box>

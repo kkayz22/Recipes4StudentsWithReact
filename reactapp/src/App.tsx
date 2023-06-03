@@ -8,6 +8,8 @@ import NewRecipePage from './pages/NewRecipePage.tsx';
 import NotFound from './pages/NotFound.tsx';
 import Navbar from './components/Navbar.tsx';
 
+import "./App.css"
+
 const App = () => {
   return (
     <React.Fragment>
