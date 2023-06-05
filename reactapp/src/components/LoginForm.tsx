@@ -1,16 +1,21 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Alert, CircularProgress } from '@mui/material';
+import { useState } from "react"
 import { useNavigate } from 'react-router';
 
-interface ILogin {
+import { useAuth } from '../hooks/useAuth';
+
+export interface ILogin {
 	email: string,
 	password: string
 }
 
 const LoginForm = () => {
+	const { login } = useAuth()
 	const navigate = useNavigate()
-
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState("")
 	const initialValues = {
 		email: '',
 		password: '',
@@ -24,10 +29,19 @@ const LoginForm = () => {
 			.required('Password is required'),
 	});
 
-	const onSubmit = (values: ILogin) => {
+	const onSubmit = async (values: ILogin) => {
 		// Handle form submission here
-		console.log(values)
-		navigate("/")
+		try {
+			setLoading(true)
+			console.log(values)
+			await login(values)
+			navigate("/")
+			setLoading(false)
+		} catch (error: any) {
+			setLoading(true)
+			setError(error.response.data)
+			setLoading(false)
+		}
 	};
 
 	const formik = useFormik({
@@ -65,8 +79,11 @@ const LoginForm = () => {
 			/>
 
 			<Button type="submit" variant="contained" color="primary" style={{ marginTop: "0.5rem" }}>
-				Login
+				{ loading ? <CircularProgress style={{width: "1.5rem", height: "1.5rem", color: "white"}}/> : "Login" }
 			</Button>
+			{error ? <Alert variant="outlined" severity="error" style={{ marginTop: "0.5rem" }}>
+				{error}
+			</Alert> : ""}
 		</form>
 	)
 }

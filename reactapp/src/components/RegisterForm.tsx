@@ -1,7 +1,9 @@
+import { useState } from "react"
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Alert } from '@mui/material';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
 
 interface IRegister {
 	email: string,
@@ -12,6 +14,8 @@ interface IRegister {
 }
 
 const RegisterForm = () => {
+	const [error, setError] = useState("")
+	const [loading, setLoading] = useState(false)
 	const navigate = useNavigate()
 
 	const initialValues = {
@@ -37,10 +41,19 @@ const RegisterForm = () => {
 			.required("Field is required")
 	});
 
-	const onSubmit = (values: IRegister) => {
+	const onSubmit = async (values: IRegister) => {
 		// Handle form submission here
-		console.log(values);
-		navigate("/login")
+		try {
+			setLoading(true)
+			console.log(values);
+			await axios.post("http://localhost:5200/Auth/register", values)
+			navigate("/login")
+			setLoading(false)
+		} catch (err: any) {
+			setLoading(true)
+			setError(err.response.data)
+			setLoading(false)
+		}
 	};
 
 	const formik = useFormik({
@@ -117,8 +130,12 @@ const RegisterForm = () => {
 			/>
 
 			<Button type="submit" variant="contained" color="primary" style={{ marginTop: "0.5rem" }}>
-				Register
+				{ loading ? <CircularProgress style={{width: "1.5rem", height: "1.5rem", color: "white"}}/> : "Register" }
 			</Button>
+			{error ? 
+			<Alert variant="outlined" severity="error" style={{marginTop: "0.5rem"}}>
+				{error}
+			</Alert> : ""}
 		</form>
 	)
 }

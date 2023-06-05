@@ -2,6 +2,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
+
+import { useAuth } from '../hooks/useAuth';
 
 interface IRecipeForm {
 	title: string,
@@ -14,12 +17,13 @@ interface IRecipeForm {
 
 const RecipeForm = () => {
 	const navigate = useNavigate()
+	const { user } = useAuth()
 
 	const initialValues = {
 		title: '',
 		description: '',
-		index: 0,
-		username: '',
+		index: user.value.user.index,
+		username: user.value.user.username,
 		imageURL: '',
         recipeURL: ''
 	};
@@ -39,9 +43,11 @@ const RecipeForm = () => {
             .trim().matches(/^(http(s):\/\/.)[-a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)$/g, "Needs to be a valid url"),
 	});
 
-	const onSubmit = (values: IRecipeForm) => {
+	const onSubmit = async (values: IRecipeForm) => {
 		// Handle form submission here
-		console.log(values);
+		console.log(values)
+		const headers = { 'Authorization': `Bearer ${user.value.token}` }
+		await axios.post("http://localhost:5200/api/Recipes", values, { headers })
 		navigate("/")
 	};
 
@@ -83,7 +89,7 @@ const RecipeForm = () => {
 				fullWidth
 				id="imageURL"
 				name="imageURL"
-				label="imageURL"
+				label="Link to image"
 				value={formik.values.imageURL}
 				onChange={formik.handleChange}
 				onBlur={formik.handleBlur}
@@ -96,7 +102,7 @@ const RecipeForm = () => {
 				fullWidth
 				id="recipeURL"
 				name="recipeURL"
-				label="recipeURL"
+				label="Link to recipe"
 				value={formik.values.recipeURL}
 				onChange={formik.handleChange}
 				onBlur={formik.handleBlur}
