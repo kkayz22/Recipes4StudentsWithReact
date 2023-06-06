@@ -42,7 +42,7 @@ namespace webapi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<List<Recipe>>> DeleteRecipe(int id)
+        public async Task<ActionResult<List<Recipe>>> DeleteRecipe(Guid id)
         {
             var result = await _recipesService.DeleteRecipe(id);
             if (result == null) return NotFound("Recipe does not exist.");

@@ -4,7 +4,7 @@ import { Button, TextField, Alert, CircularProgress } from '@mui/material';
 import { useState } from "react"
 import { useNavigate } from 'react-router';
 
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 
 export interface ILogin {
 	email: string,
@@ -65,7 +65,7 @@ const LoginForm = () => {
 			/>
 
 			<TextField
-				style={{ marginTop: "0.5rem" }}
+				style={{ marginTop: "0.7rem" }}
 				fullWidth
 				id="password"
 				name="password"
@@ -78,8 +78,8 @@ const LoginForm = () => {
 				helperText={formik.touched.password && formik.errors.password}
 			/>
 
-			<Button type="submit" variant="contained" color="primary" style={{ marginTop: "0.5rem" }}>
-				{ loading ? <CircularProgress style={{width: "1.5rem", height: "1.5rem", color: "white"}}/> : "Login" }
+			<Button type="submit" variant="contained" color="primary" style={{ marginTop: "0.7rem" }}>
+				{loading ? <CircularProgress style={{ width: "1.5rem", height: "1.5rem", color: "white" }} /> : "Login"}
 			</Button>
 			{error ? <Alert variant="outlined" severity="error" style={{ marginTop: "0.5rem" }}>
 				{error}

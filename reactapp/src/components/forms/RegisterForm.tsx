@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, TextField, Alert } from '@mui/material';
+import { Button, TextField, Alert, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 
@@ -77,7 +77,7 @@ const RegisterForm = () => {
 			/>
 
 			<TextField
-				style={{ marginTop: "0.5rem" }}
+				style={{ marginTop: "0.7rem" }}
 				fullWidth
 				id="password"
 				name="password"
@@ -91,7 +91,7 @@ const RegisterForm = () => {
 			/>
 
 			<TextField
-				style={{ marginTop: "0.5rem" }}
+				style={{ marginTop: "0.7rem" }}
 				fullWidth
 				id="index"
 				name="index"
@@ -104,7 +104,7 @@ const RegisterForm = () => {
 			/>
 
 			<TextField
-				style={{ marginTop: "0.5rem" }}
+				style={{ marginTop: "0.7rem" }}
 				fullWidth
 				id="username"
 				name="username"
@@ -117,7 +117,7 @@ const RegisterForm = () => {
 			/>
 
 			<TextField
-				style={{ marginTop: "0.5rem" }}
+				style={{ marginTop: "0.7rem" }}
 				fullWidth
 				id="field"
 				name="field"
@@ -129,13 +129,13 @@ const RegisterForm = () => {
 				helperText={formik.touched.field && formik.errors.field}
 			/>
 
-			<Button type="submit" variant="contained" color="primary" style={{ marginTop: "0.5rem" }}>
-				{ loading ? <CircularProgress style={{width: "1.5rem", height: "1.5rem", color: "white"}}/> : "Register" }
+			<Button type="submit" variant="contained" color="primary" style={{ marginTop: "0.7rem" }}>
+				{loading ? <CircularProgress style={{ width: "1.5rem", height: "1.5rem", color: "white" }} /> : "Register"}
 			</Button>
-			{error ? 
-			<Alert variant="outlined" severity="error" style={{marginTop: "0.5rem"}}>
-				{error}
-			</Alert> : ""}
+			{error ?
+				<Alert variant="outlined" severity="error" style={{ marginTop: "0.5rem" }}>
+					{error}
+				</Alert> : ""}
 		</form>
 	)
 }

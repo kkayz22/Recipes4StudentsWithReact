@@ -4,8 +4,8 @@ import { useLocalStorage } from "./useLocalStorage";
 
 // NOTE: optimally move this into a separate file
 export interface User {
-    email: string,
-    password: string
+  email: string;
+  password: string;
 }
 
 export const useUser = () => {

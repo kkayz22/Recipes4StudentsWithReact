@@ -15,9 +15,13 @@ export const useAuth = () => {
   }, []);
 
   const login = async (values: User) => {
-    const response = await axios.post("http://localhost:5200/Auth/login", values, {
-        withCredentials: true
-    })
+    const response = await axios.post(
+      "http://localhost:5200/Auth/login",
+      values,
+      {
+        withCredentials: true,
+      }
+    );
     addUser(response.data);
   };
 

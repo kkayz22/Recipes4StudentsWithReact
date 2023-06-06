@@ -15,11 +15,11 @@ const App = () => {
     <React.Fragment>
       <Navbar />
       <Routes>
-        <Route path="*" element={<NotFound/>}/>
-        <Route path='/' element={<MainPage/>}/>
-        <Route path="/addRecipe" element={<NewRecipePage/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/register' element={<RegisterPage/>}/>
+        <Route path="*" element={<NotFound />} />
+        <Route path='/' element={<MainPage />} />
+        <Route path="/addRecipe" element={<NewRecipePage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/register' element={<RegisterPage />} />
       </Routes>
     </React.Fragment>
   )

@@ -29,14 +29,14 @@ const MainPage = () => {
 	}, [])
 
 	return (
-		<Container maxWidth="md" style={{marginTop: "5rem"}}>
+		<Container maxWidth="md" style={{ marginTop: "5rem" }}>
 			{
 				loading ?
-					<SpinnerComponent /> : 
+					<SpinnerComponent /> :
 					<Grid container spacing={4}>
 						{recipes.map(recipe => (
 							<Grid item xs={4} key={recipe.id}>
-								<CardComponent {...recipe}/>
+								<CardComponent {...recipe} />
 							</Grid>
 						))}
 					</Grid>

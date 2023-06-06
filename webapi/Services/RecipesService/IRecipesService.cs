@@ -7,6 +7,6 @@ namespace webapi.Services.RecipesService
         Task<List<Recipe>> GetRecipes();
         Task<Recipe?> GetRecipe(int id);
         Task<List<Recipe>> AddRecipe(Recipe recipe);
-        Task<List<Recipe>?> DeleteRecipe(int id);
+        Task<List<Recipe>?> DeleteRecipe(Guid id);
     }
 }

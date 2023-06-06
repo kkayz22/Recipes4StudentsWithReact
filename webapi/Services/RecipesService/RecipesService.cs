@@ -21,7 +21,7 @@ namespace webapi.Services.RecipesService
             return await _context.Recipes.ToListAsync();
         }
 
-        public async Task<List<Recipe>?> DeleteRecipe(int id)
+        public async Task<List<Recipe>?> DeleteRecipe(Guid id)
         {
             var recipe = await _context.Recipes.FindAsync(id);
             if (recipe == null)
